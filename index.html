@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alexandra & Liviu — 25 iulie 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  /* ===================== RESET & BASE ===================== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream:   #FAF7F2;
+    --petal:   #E8D5C4;
+    --blush:   #C9937A;
+    --rose:    #8B4A5C;
+    --deep:    #3D2535;
+    --gold:    #C0965A;
+    --text:    #3D2535;
+    --muted:   #8C7A70;
+    --white:   #FFFFFF;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ===================== DECORATIVE BG ===================== */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 15% 10%, rgba(201,147,122,0.13) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 85% 85%, rgba(139,74,92,0.10) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 40% at 50% 50%, rgba(192,150,90,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ===================== WRAPPER ===================== */
+  .page {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1.5rem 4rem;
+  }
+
+  /* ===================== ORNAMENT ===================== */
+  .ornament {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.1s forwards;
+  }
+  .ornament-line {
+    width: 48px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold));
+  }
+  .ornament-line.right {
+    background: linear-gradient(90deg, var(--gold), transparent);
+  }
+  .ornament-diamond {
+    width: 8px;
+    height: 8px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+  .ornament-small {
+    width: 4px;
+    height: 4px;
+    background: var(--blush);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  /* ===================== CARD ===================== */
+  .card {
+    background: rgba(255,255,255,0.72);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(192,150,90,0.22);
+    border-radius: 24px;
+    padding: 3rem 2.5rem;
+    max-width: 460px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.25s forwards;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: 20px; right: 20px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), var(--blush), var(--gold), transparent);
+  }
+
+  /* ===================== CORNER FLOURISH ===================== */
+  .card::after {
+    content: '✦';
+    position: absolute;
+    top: 18px;
+    right: 22px;
+    font-size: 11px;
+    color: var(--gold);
+    opacity: 0.6;
+  }
+
+  /* ===================== NAMES ===================== */
+  .eyebrow {
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+  }
+
+  .names {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(38px, 9vw, 52px);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--deep);
+    margin-bottom: 0.2rem;
+  }
+
+  .names em {
+    font-style: italic;
+    color: var(--rose);
+  }
+
+  .ampersand {
+    display: block;
+    font-size: 0.75em;
+    font-style: italic;
+    color: var(--gold);
+    line-height: 1;
+    margin: 0.1em 0;
+  }
+
+  .date-line {
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-top: 0.75rem;
+    margin-bottom: 0;
+  }
+
+  /* ===================== DIVIDER ===================== */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 1.75rem auto;
+    justify-content: center;
+  }
+  .div-line {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(192,150,90,0.5));
+  }
+  .div-line.r {
+    background: linear-gradient(90deg, rgba(192,150,90,0.5), transparent);
+  }
+  .div-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: 0.7;
+  }
+
+ 
+  .message {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.8;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    padding: 0 0.5rem;
+  }
+
+  /* ===================== BUTTON ===================== */
+  .btn-wrap {
+    margin-bottom: 1rem;
+  }
+
+  .btn-upload {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 15px 24px;
+    background: var(--rose);
+    border: none;
+    border-radius: 100px;
+    color: var(--white);
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    box-shadow: 0 4px 24px rgba(139,74,92,0.25);
+  }
+
+  .btn-upload::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .btn-upload:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(139,74,92,0.35);
+  }
+
+  .btn-upload:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 12px rgba(139,74,92,0.2);
+  }
+
+  .btn-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+
+  .btn-hint {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    margin-top: 0.6rem;
+  }
+
+  
+  .footer-note {
+    margin-top: 2.5rem;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: rgba(61,37,53,0.3);
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.55s forwards;
+  }
+
+  .footer-note span {
+    color: var(--gold);
+    opacity: 0.7;
+  }
+
+  /* ===================== ANIMATIONS ===================== */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* inner card elements stagger */
+  .card .eyebrow    { animation: fadeUp 0.7s ease 0.4s both; }
+  .card .names      { animation: fadeUp 0.7s ease 0.5s both; }
+  .card .date-line  { animation: fadeUp 0.7s ease 0.58s both; }
+  .card .divider    { animation: fadeUp 0.7s ease 0.65s both; }
+  .card .message    { animation: fadeUp 0.7s ease 0.72s both; }
+  .card .btn-wrap   { animation: fadeUp 0.7s ease 0.8s both; }
+  .card .btn-hint   { animation: fadeUp 0.7s ease 0.88s both; }
+
+  /* ===================== MOBILE ===================== */
+  @media (max-width: 480px) {
+    .card { padding: 2.25rem 1.5rem; border-radius: 20px; }
+    .names { font-size: 42px; }
+    .message { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- top ornament -->
+  <div class="ornament">
+    <div class="ornament-line"></div>
+    <div class="ornament-small"></div>
+    <div class="ornament-diamond"></div>
+    <div class="ornament-small"></div>
+    <div class="ornament-line right"></div>
+  </div>
+
+  <!-- main card -->
+  <div class="card">
+    <p class="eyebrow">Nunta noastră</p>
+
+    <h1 class="names">
+      <em>Alexandra</em>
+      <span class="ampersand">&amp;</span>
+      <em>Liviu</em>
+    </h1>
+
+    <p class="date-line">25 iulie 2026</p>
+
+    <div class="divider">
+      <div class="div-line"></div>
+      <div class="div-dot"></div>
+      <div class="div-line r"></div>
+    </div>
+
+    <p class="message">
+      Suntem atât de bucuroși că ești alături de noi în această zi.<br>
+      Trimite-ne pozele și videoclipurile tale — fiecare moment contat.
+    </p>
+
+    <div class="btn-wrap">
+      <!--
+       
+      -->
+      <a
+        class="btn-upload"
+        href=""
+        target="_blank"
+        rel="noopener"
+      >
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.8"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="17 8 12 3 7 8"/>
+          <line x1="12" y1="3" x2="12" y2="15"/>
+        </svg>
+        Trimite poze &amp; video
+      </a>
+      <p class="btn-hint">Fișierele ajung direct în colecția noastră ✦</p>
+    </div>
+  </div>
+
+  <p class="footer-note">
+    Cu drag, <span>Alexandra &amp; Liviu</span>
+  </p>
+
+</div>
+
+</body>
+</html>
