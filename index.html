@@ -6,48 +6,56 @@
 <title>Alexandra & Liviu — 25 iulie 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  /* ===================== RESET & BASE ===================== */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --cream:   #FAF7F2;
-    --petal:   #E8D5C4;
-    --blush:   #C9937A;
-    --rose:    #8B4A5C;
-    --deep:    #3D2535;
-    --gold:    #C0965A;
-    --text:    #3D2535;
-    --muted:   #8C7A70;
-    --white:   #FFFFFF;
+    --white:      #FFFFFF;
+    --off-white:  #F8F7F3;
+    --olive-100:  #E2E6CC;
+    --olive-200:  #C8CEA3;
+    --olive-400:  #8D9660;
+    --olive-600:  #5C6637;
+    --olive-800:  #353C1E;
+    --warm-gray:  #9A978E;
+    --text:       #2C2E24;
+    --text-muted: #7A7D6F;
   }
 
   html { scroll-behavior: smooth; }
 
   body {
-    font-family: 'Jost', sans-serif;
+    font-family: 'Raleway', sans-serif;
     font-weight: 300;
-    background: var(--cream);
+    background: var(--off-white);
     color: var(--text);
     min-height: 100vh;
     overflow-x: hidden;
   }
 
-  /* ===================== DECORATIVE BG ===================== */
   body::before {
     content: '';
     position: fixed;
     inset: 0;
-    background:
-      radial-gradient(ellipse 80% 60% at 15% 10%, rgba(201,147,122,0.13) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 50% at 85% 85%, rgba(139,74,92,0.10) 0%, transparent 55%),
-      radial-gradient(ellipse 50% 40% at 50% 50%, rgba(192,150,90,0.06) 0%, transparent 70%);
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(141,150,96,0.025) 3px, rgba(141,150,96,0.025) 4px),
+      repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(141,150,96,0.025) 3px, rgba(141,150,96,0.025) 4px);
     pointer-events: none;
     z-index: 0;
   }
 
-  /* ===================== WRAPPER ===================== */
+  body::after {
+    content: '';
+    position: fixed;
+    top: -20vh; right: -20vw;
+    width: 70vmax; height: 70vmax;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(140,150,96,0.07) 0%, transparent 65%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
   .page {
     position: relative;
     z-index: 1;
@@ -59,315 +67,276 @@
     padding: 3rem 1.5rem 4rem;
   }
 
-  /* ===================== ORNAMENT ===================== */
-  .ornament {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 2rem;
+  .sprig-top, .sprig-bottom {
+    width: 160px;
     opacity: 0;
-    animation: fadeUp 0.9s ease 0.1s forwards;
   }
-  .ornament-line {
-    width: 48px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold));
+  .sprig-top {
+    margin-bottom: -12px;
+    animation: fadeIn 1.2s ease 0.1s forwards;
   }
-  .ornament-line.right {
-    background: linear-gradient(90deg, var(--gold), transparent);
-  }
-  .ornament-diamond {
-    width: 8px;
-    height: 8px;
-    background: var(--gold);
-    transform: rotate(45deg);
-    flex-shrink: 0;
-  }
-  .ornament-small {
-    width: 4px;
-    height: 4px;
-    background: var(--blush);
-    transform: rotate(45deg);
-    flex-shrink: 0;
+  .sprig-bottom {
+    margin-top: -12px;
+    transform: scaleY(-1);
+    animation: fadeIn 1.2s ease 0.9s forwards;
   }
 
-  /* ===================== CARD ===================== */
   .card {
-    background: rgba(255,255,255,0.72);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(192,150,90,0.22);
-    border-radius: 24px;
-    padding: 3rem 2.5rem;
-    max-width: 460px;
+    background: var(--white);
+    border: 1px solid var(--olive-100);
+    border-radius: 4px;
+    padding: 3rem 2.75rem 2.75rem;
+    max-width: 440px;
     width: 100%;
     text-align: center;
     position: relative;
-    overflow: hidden;
     opacity: 0;
-    animation: fadeUp 0.9s ease 0.25s forwards;
+    animation: fadeUp 0.9s ease 0.3s forwards;
   }
 
-  .card::before {
+  .card::before, .card::after {
     content: '';
     position: absolute;
-    top: -1px; left: 20px; right: 20px;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--gold), var(--blush), var(--gold), transparent);
+    width: 18px; height: 18px;
+    border-color: var(--olive-200);
+    border-style: solid;
   }
+  .card::before { top: 10px; left: 10px; border-width: 1px 0 0 1px; }
+  .card::after  { bottom: 10px; right: 10px; border-width: 0 1px 1px 0; }
 
-  /* ===================== CORNER FLOURISH ===================== */
-  .card::after {
-    content: '✦';
+  .card-inner { position: relative; }
+  .card-inner::before, .card-inner::after {
+    content: '';
     position: absolute;
-    top: 18px;
-    right: 22px;
-    font-size: 11px;
-    color: var(--gold);
-    opacity: 0.6;
+    width: 18px; height: 18px;
+    border-color: var(--olive-200);
+    border-style: solid;
   }
+  .card-inner::before { top: -1.8rem; right: -1.5rem; border-width: 1px 1px 0 0; }
+  .card-inner::after  { bottom: -1.5rem; left: -1.5rem; border-width: 0 0 1px 1px; }
 
-  /* ===================== NAMES ===================== */
   .eyebrow {
-    font-family: 'Jost', sans-serif;
     font-size: 10px;
-    font-weight: 400;
-    letter-spacing: 0.25em;
+    font-weight: 500;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 0.75rem;
+    color: var(--olive-400);
+    margin-bottom: 1rem;
+    animation: fadeUp 0.7s ease 0.5s both;
   }
 
   .names {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(38px, 9vw, 52px);
-    font-weight: 300;
-    line-height: 1.1;
-    color: var(--deep);
-    margin-bottom: 0.2rem;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 8.5vw, 50px);
+    font-weight: 400;
+    line-height: 1.15;
+    color: var(--olive-800);
+    animation: fadeUp 0.7s ease 0.58s both;
   }
-
-  .names em {
-    font-style: italic;
-    color: var(--rose);
-  }
-
-  .ampersand {
+  .names em { font-style: italic; color: var(--olive-600); }
+  .amp {
     display: block;
-    font-size: 0.75em;
     font-style: italic;
-    color: var(--gold);
-    line-height: 1;
-    margin: 0.1em 0;
+    font-size: 0.65em;
+    color: var(--olive-200);
+    line-height: 1.1;
+    margin: 0.05em 0;
   }
 
-  .date-line {
-    font-size: 12px;
-    letter-spacing: 0.18em;
-    color: var(--muted);
-    text-transform: uppercase;
-    margin-top: 0.75rem;
-    margin-bottom: 0;
-  }
-
-  /* ===================== DIVIDER ===================== */
-  .divider {
+  .date-row {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin: 1.75rem auto;
     justify-content: center;
+    gap: 10px;
+    margin-top: 1rem;
+    animation: fadeUp 0.7s ease 0.65s both;
   }
-  .div-line {
-    width: 60px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(192,150,90,0.5));
-  }
-  .div-line.r {
-    background: linear-gradient(90deg, rgba(192,150,90,0.5), transparent);
-  }
-  .div-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: var(--gold);
-    opacity: 0.7;
+  .date-line-el { flex: 1; max-width: 50px; height: 1px; background: var(--olive-100); }
+  .date-text {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
   }
 
- 
+  .leaf-divider {
+    margin: 1.75rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    animation: fadeUp 0.7s ease 0.72s both;
+  }
+  .leaf-line   { width: 44px; height: 1px; background: var(--olive-100); }
+  .leaf-dot    { width: 6px; height: 6px; border-radius: 50%; background: var(--olive-200); }
+  .leaf-diamond{ width: 6px; height: 6px; background: var(--olive-400); transform: rotate(45deg); flex-shrink: 0; }
+
   .message {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Playfair Display', serif;
     font-style: italic;
-    font-size: 17px;
-    line-height: 1.8;
-    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.9;
+    color: var(--text-muted);
     margin-bottom: 2rem;
-    padding: 0 0.5rem;
+    padding: 0 0.25rem;
+    animation: fadeUp 0.7s ease 0.78s both;
   }
 
-  /* ===================== BUTTON ===================== */
-  .btn-wrap {
-    margin-bottom: 1rem;
-  }
+  .btn-wrap { animation: fadeUp 0.7s ease 0.86s both; }
 
   .btn-upload {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 9px;
     width: 100%;
-    padding: 15px 24px;
-    background: var(--rose);
+    padding: 14px 24px;
+    background: var(--olive-600);
     border: none;
-    border-radius: 100px;
+    border-radius: 2px;
     color: var(--white);
-    font-family: 'Jost', sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    letter-spacing: 0.1em;
+    font-family: 'Raleway', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     text-decoration: none;
     cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.18s ease, box-shadow 0.18s ease;
-    box-shadow: 0 4px 24px rgba(139,74,92,0.25);
+    transition: background 0.2s ease, transform 0.15s ease;
   }
+  .btn-upload:hover { background: var(--olive-800); transform: translateY(-1px); }
+  .btn-upload:active { transform: translateY(0); }
 
-  .btn-upload::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 60%);
-    pointer-events: none;
-  }
-
-  .btn-upload:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(139,74,92,0.35);
-  }
-
-  .btn-upload:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 12px rgba(139,74,92,0.2);
-  }
-
-  .btn-icon {
-    width: 18px;
-    height: 18px;
-    flex-shrink: 0;
-  }
+  .btn-icon { width: 16px; height: 16px; flex-shrink: 0; opacity: 0.85; }
 
   .btn-hint {
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.06em;
-    margin-top: 0.6rem;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: var(--olive-200);
+    margin-top: 0.7rem;
+    text-transform: uppercase;
   }
 
-  
   .footer-note {
     margin-top: 2.5rem;
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    color: rgba(61,37,53,0.3);
+    font-size: 10px;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
+    color: var(--olive-200);
     opacity: 0;
-    animation: fadeUp 0.9s ease 0.55s forwards;
+    animation: fadeIn 1s ease 1.1s forwards;
   }
 
-  .footer-note span {
-    color: var(--gold);
-    opacity: 0.7;
-  }
-
-  /* ===================== ANIMATIONS ===================== */
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(22px); }
+    from { opacity: 0; transform: translateY(18px); }
     to   { opacity: 1; transform: translateY(0); }
   }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
 
-  /* inner card elements stagger */
-  .card .eyebrow    { animation: fadeUp 0.7s ease 0.4s both; }
-  .card .names      { animation: fadeUp 0.7s ease 0.5s both; }
-  .card .date-line  { animation: fadeUp 0.7s ease 0.58s both; }
-  .card .divider    { animation: fadeUp 0.7s ease 0.65s both; }
-  .card .message    { animation: fadeUp 0.7s ease 0.72s both; }
-  .card .btn-wrap   { animation: fadeUp 0.7s ease 0.8s both; }
-  .card .btn-hint   { animation: fadeUp 0.7s ease 0.88s both; }
-
-  /* ===================== MOBILE ===================== */
   @media (max-width: 480px) {
-    .card { padding: 2.25rem 1.5rem; border-radius: 20px; }
-    .names { font-size: 42px; }
-    .message { font-size: 16px; }
+    .card { padding: 2.25rem 1.75rem; }
+    .names { font-size: 38px; }
+    .message { font-size: 15px; }
+    .sprig-top, .sprig-bottom { width: 120px; }
   }
 </style>
 </head>
 <body>
-
 <div class="page">
 
-  <!-- top ornament -->
-  <div class="ornament">
-    <div class="ornament-line"></div>
-    <div class="ornament-small"></div>
-    <div class="ornament-diamond"></div>
-    <div class="ornament-small"></div>
-    <div class="ornament-line right"></div>
-  </div>
+  <svg class="sprig-top" viewBox="0 0 160 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="80" y1="58" x2="80" y2="8" stroke="#8D9660" stroke-width="1" stroke-linecap="round"/>
+    <line x1="80" y1="40" x2="52" y2="24" stroke="#8D9660" stroke-width="0.8" stroke-linecap="round"/>
+    <line x1="80" y1="28" x2="58" y2="14" stroke="#8D9660" stroke-width="0.8" stroke-linecap="round"/>
+    <line x1="80" y1="18" x2="66" y2="8"  stroke="#8D9660" stroke-width="0.8" stroke-linecap="round"/>
+    <line x1="80" y1="40" x2="108" y2="24" stroke="#8D9660" stroke-width="0.8" stroke-linecap="round"/>
+    <line x1="80" y1="28" x2="102" y2="14" stroke="#8D9660" stroke-width="0.8" stroke-linecap="round"/>
+    <line x1="80" y1="18" x2="94"  y2="8"  stroke="#8D9660" stroke-width="0.8" stroke-linecap="round"/>
+    <ellipse cx="46" cy="21" rx="7" ry="4" fill="#C8CEA3" transform="rotate(-30 46 21)"/>
+    <ellipse cx="54" cy="11" rx="6" ry="3.5" fill="#8D9660" transform="rotate(-20 54 11)"/>
+    <ellipse cx="62" cy="5"  rx="5" ry="3"   fill="#C8CEA3" transform="rotate(-10 62 5)"/>
+    <ellipse cx="114" cy="21" rx="7" ry="4" fill="#C8CEA3" transform="rotate(30 114 21)"/>
+    <ellipse cx="106" cy="11" rx="6" ry="3.5" fill="#8D9660" transform="rotate(20 106 11)"/>
+    <ellipse cx="98"  cy="5"  rx="5" ry="3"   fill="#C8CEA3" transform="rotate(10 98 5)"/>
+    <circle cx="80" cy="7"  r="2.5" fill="#5C6637"/>
+    <circle cx="74" cy="4"  r="1.8" fill="#8D9660"/>
+    <circle cx="86" cy="4"  r="1.8" fill="#8D9660"/>
+  </svg>
 
-  <!-- main card -->
   <div class="card">
-    <p class="eyebrow">Nunta noastră</p>
+    <div class="card-inner">
+      <p class="eyebrow">Nunta noastră</p>
+      <h1 class="names">
+        <em>Alexandra</em>
+        <span class="amp">&amp;</span>
+        <em>Liviu</em>
+      </h1>
+      <div class="date-row">
+        <div class="date-line-el"></div>
+        <span class="date-text">25 iulie 2026</span>
+        <div class="date-line-el"></div>
+      </div>
+      <div class="leaf-divider">
+        <div class="leaf-line"></div>
+        <div class="leaf-dot"></div>
+        <div class="leaf-diamond"></div>
+        <div class="leaf-dot"></div>
+        <div class="leaf-line"></div>
+      </div>
+      <p class="message">
+        Suntem bucuroși că ești alături de noi<br>
+        în această zi de neuitat.<br>
+        Trimite-ne amintirile tale din ziua nunții.
+      </p>
+      <div class="btn-wrap">
+        <!--
 
-    <h1 class="names">
-      <em>Alexandra</em>
-      <span class="ampersand">&amp;</span>
-      <em>Liviu</em>
-    </h1>
 
-    <p class="date-line">25 iulie 2026</p>
 
-    <div class="divider">
-      <div class="div-line"></div>
-      <div class="div-dot"></div>
-      <div class="div-line r"></div>
-    </div>
-
-    <p class="message">
-      Suntem atât de bucuroși că ești alături de noi în această zi.<br>
-      Trimite-ne pozele și videoclipurile tale — fiecare moment contat.
-    </p>
-
-    <div class="btn-wrap">
-      <!--
-       
-      -->
-      <a
-        class="btn-upload"
-        href=""
-        target="_blank"
-        rel="noopener"
-      >
-        <svg class="btn-icon" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="1.8"
-             stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-          <polyline points="17 8 12 3 7 8"/>
-          <line x1="12" y1="3" x2="12" y2="15"/>
-        </svg>
-        Trimite poze &amp; video
-      </a>
-      <p class="btn-hint">Fișierele ajung direct în colecția noastră ✦</p>
+          ÎNLOCUIEȘTE "LINK_GOOGLE_DRIVE_AICI" cu link-ul folderului tău Google Drive
+          (setează folderul ca public cu permisiune "Editor" sau "Contributor")
+        -->
+        <a class="btn-upload" href="https://drive.google.com/drive/folders/1jILMsB25ZuE5_3OpvGNiVtkQPnwnTtWa?usp=drive_link" target="_blank" rel="noopener">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="1.8"
+               stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+          Trimite poze &amp; video
+        </a>
+        <p class="btn-hint">Fișierele ajung direct în colecția noastră</p>
+      </div>
     </div>
   </div>
 
-  <p class="footer-note">
-    Cu drag, <span>Alexandra &amp; Liviu</span>
-  </p>
+  <svg class="sprig-bottom" viewBox="0 0 160 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="80" y1="58" x2="80" y2="8" stroke="#8D9660" stroke-width="1" stroke-linecap="round"/>
+    <line x1="80" y1="40" x2="52" y2="24" stroke="#8D9660" stroke-width="0.8" stroke-linecap="round"/>
+    <line x1="80" y1="28" x2="58" y2="14" stroke="#8D9660" stroke-width="0.8" stroke-linecap="round"/>
+    <line x1="80" y1="18" x2="66" y2="8"  stroke="#8D9660" stroke-width="0.8" stroke-linecap="round"/>
+    <line x1="80" y1="40" x2="108" y2="24" stroke="#8D9660" stroke-width="0.8" stroke-linecap="round"/>
+    <line x1="80" y1="28" x2="102" y2="14" stroke="#8D9660" stroke-width="0.8" stroke-linecap="round"/>
+    <line x1="80" y1="18" x2="94"  y2="8"  stroke="#8D9660" stroke-width="0.8" stroke-linecap="round"/>
+    <ellipse cx="46" cy="21" rx="7" ry="4" fill="#C8CEA3" transform="rotate(-30 46 21)"/>
+    <ellipse cx="54" cy="11" rx="6" ry="3.5" fill="#8D9660" transform="rotate(-20 54 11)"/>
+    <ellipse cx="62" cy="5"  rx="5" ry="3"   fill="#C8CEA3" transform="rotate(-10 62 5)"/>
+    <ellipse cx="114" cy="21" rx="7" ry="4" fill="#C8CEA3" transform="rotate(30 114 21)"/>
+    <ellipse cx="106" cy="11" rx="6" ry="3.5" fill="#8D9660" transform="rotate(20 106 11)"/>
+    <ellipse cx="98"  cy="5"  rx="5" ry="3"   fill="#C8CEA3" transform="rotate(10 98 5)"/>
+    <circle cx="80" cy="7"  r="2.5" fill="#5C6637"/>
+    <circle cx="74" cy="4"  r="1.8" fill="#8D9660"/>
+    <circle cx="86" cy="4"  r="1.8" fill="#8D9660"/>
+  </svg>
+
+  <p class="footer-note">Cu drag &nbsp;·&nbsp; Alexandra &amp; Liviu</p>
 
 </div>
-
 </body>
 </html>
