@@ -6,356 +6,628 @@
 <title>Alexandra & Liviu — 25 iulie 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --white:      #FFFFFF;
-    --off-white:  #F8F7F3;
-    --olive-100:  #E2E6CC;
-    --olive-200:  #C8CEA3;
-    --olive-400:  #8D9660;
-    --olive-600:  #5C6637;
-    --olive-800:  #353C1E;
-    --warm-gray:  #9A978E;
-    --text:       #2C2E24;
-    --text-muted: #7A7D6F;
-    --success:    #4a7c4e;
-    --error:      #8B3A3A;
-  }
-  html { scroll-behavior: smooth; }
-  body {
-    font-family: 'Raleway', sans-serif;
-    font-weight: 300;
-    background: var(--off-white);
-    color: var(--text);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-  body::before {
-    content: ''; position: fixed; inset: 0;
-    background-image:
-      repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(141,150,96,0.025) 3px, rgba(141,150,96,0.025) 4px),
-      repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(141,150,96,0.025) 3px, rgba(141,150,96,0.025) 4px);
-    pointer-events: none; z-index: 0;
-  }
-  body::after {
-    content: ''; position: fixed; top: -20vh; right: -20vw;
-    width: 70vmax; height: 70vmax; border-radius: 50%;
-    background: radial-gradient(circle, rgba(140,150,96,0.07) 0%, transparent 65%);
-    pointer-events: none; z-index: 0;
-  }
-  .page {
-    position: relative; z-index: 1; min-height: 100vh;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    padding: 3rem 1.5rem 4rem;
-  }
-  .sprig-top, .sprig-bottom { width: 160px; opacity: 0; }
-  .sprig-top    { margin-bottom: -12px; animation: fadeIn 1.2s ease 0.1s forwards; }
-  .sprig-bottom { margin-top: -12px; transform: scaleY(-1); animation: fadeIn 1.2s ease 0.9s forwards; }
-  .card {
-    background: var(--white); border: 1px solid var(--olive-100);
-    border-radius: 4px; padding: 3rem 2.75rem 2.75rem;
-    max-width: 460px; width: 100%; text-align: center;
-    position: relative; opacity: 0; animation: fadeUp 0.9s ease 0.3s forwards;
-  }
-  .card::before, .card::after {
-    content: ''; position: absolute; width: 18px; height: 18px;
-    border-color: var(--olive-200); border-style: solid;
-  }
-  .card::before { top: 10px; left: 10px; border-width: 1px 0 0 1px; }
-  .card::after  { bottom: 10px; right: 10px; border-width: 0 1px 1px 0; }
-  .card-inner { position: relative; }
-  .card-inner::before, .card-inner::after {
-    content: ''; position: absolute; width: 18px; height: 18px;
-    border-color: var(--olive-200); border-style: solid;
-  }
-  .card-inner::before { top: -1.8rem; right: -1.5rem; border-width: 1px 1px 0 0; }
-  .card-inner::after  { bottom: -1.5rem; left: -1.5rem; border-width: 0 0 1px 1px; }
-  .eyebrow {
-    font-size: 10px; font-weight: 500; letter-spacing: 0.3em;
-    text-transform: uppercase; color: var(--olive-400); margin-bottom: 1rem;
-    animation: fadeUp 0.7s ease 0.5s both;
-  }
-  .names {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(36px, 8.5vw, 50px); font-weight: 400;
-    line-height: 1.15; color: var(--olive-800);
-    animation: fadeUp 0.7s ease 0.58s both;
-  }
-  .names em { font-style: italic; color: var(--olive-600); }
-  .amp { display: block; font-style: italic; font-size: 0.65em; color: var(--olive-200); line-height: 1.1; margin: 0.05em 0; }
-  .date-row {
-    display: flex; align-items: center; justify-content: center;
-    gap: 10px; margin-top: 1rem; animation: fadeUp 0.7s ease 0.65s both;
-  }
-  .date-line-el { flex: 1; max-width: 50px; height: 1px; background: var(--olive-100); }
-  .date-text { font-size: 10px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--warm-gray); }
-  .leaf-divider {
-    margin: 1.75rem auto; display: flex; align-items: center;
-    justify-content: center; gap: 8px; animation: fadeUp 0.7s ease 0.72s both;
-  }
-  .leaf-line    { width: 44px; height: 1px; background: var(--olive-100); }
-  .leaf-dot     { width: 6px; height: 6px; border-radius: 50%; background: var(--olive-200); }
-  .leaf-diamond { width: 6px; height: 6px; background: var(--olive-400); transform: rotate(45deg); flex-shrink: 0; }
-  .message {
-    font-family: 'Playfair Display', serif; font-style: italic;
-    font-size: 16px; line-height: 1.9; color: var(--text-muted);
-    margin-bottom: 2rem; padding: 0 0.25rem;
-    animation: fadeUp 0.7s ease 0.78s both;
-  }
-  .upload-area { animation: fadeUp 0.7s ease 0.86s both; }
-  #file-input { display: none; }
-  .btn-upload {
-    display: inline-flex; align-items: center; justify-content: center;
-    gap: 9px; width: 100%; padding: 14px 24px;
-    background: var(--olive-600); border: none; border-radius: 2px;
-    color: var(--white); font-family: 'Raleway', sans-serif;
-    font-size: 11px; font-weight: 500; letter-spacing: 0.22em;
-    text-transform: uppercase; cursor: pointer;
-    transition: background 0.2s ease, transform 0.15s ease;
-  }
-  .btn-upload:hover { background: var(--olive-800); transform: translateY(-1px); }
-  .btn-upload:active { transform: translateY(0); }
-  .btn-upload:disabled { background: var(--olive-200); cursor: not-allowed; transform: none; }
-  .btn-icon { width: 16px; height: 16px; flex-shrink: 0; opacity: 0.85; }
-  .files-preview { display: none; margin-top: 1rem; text-align: left; border: 1px solid var(--olive-100); border-radius: 4px; overflow: hidden; }
-  .files-preview.visible { display: block; }
-  .file-item {
-    display: flex; align-items: center; gap: 10px; padding: 8px 12px;
-    font-size: 12px; color: var(--text-muted); border-bottom: 1px solid var(--olive-100);
-  }
-  .file-item:last-child { border-bottom: none; }
-  .file-name  { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .file-size  { font-size: 10px; color: var(--olive-200); flex-shrink: 0; }
-  .file-status { font-size: 11px; flex-shrink: 0; min-width: 70px; text-align: right; }
-  .file-status.waiting   { color: var(--warm-gray); }
-  .file-status.uploading { color: var(--olive-400); }
-  .file-status.done      { color: var(--success); }
-  .file-status.error     { color: var(--error); }
-  .progress-wrap { display: none; margin-top: 1rem; background: var(--olive-100); border-radius: 2px; height: 4px; overflow: hidden; }
-  .progress-wrap.visible { display: block; }
-  .progress-bar { height: 100%; background: var(--olive-600); width: 0%; transition: width 0.3s ease; border-radius: 2px; }
-  .status-msg { margin-top: 0.8rem; font-size: 11px; letter-spacing: 0.08em; min-height: 18px; color: var(--text-muted); }
-  .status-msg.success { color: var(--success); }
-  .status-msg.error   { color: var(--error); }
-  .btn-hint { font-size: 10px; font-weight: 400; letter-spacing: 0.1em; color: var(--olive-200); margin-top: 0.7rem; text-transform: uppercase; }
-  .footer-note { margin-top: 2.5rem; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--olive-200); opacity: 0; animation: fadeIn 1s ease 1.1s forwards; }
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
-  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-  @media (max-width: 480px) {
-    .card { padding: 2.25rem 1.5rem; }
-    .names { font-size: 38px; }
-    .message { font-size: 15px; }
-    .sprig-top, .sprig-bottom { width: 120px; }
-  }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #F8FAF3;
+  --white:    #FFFFFF;
+  --ol-50:    #F0F3E6;
+  --ol-100:   #DDE5C0;
+  --ol-200:   #C4D09A;
+  --ol-400:   #8D9660;
+  --ol-600:   #5C6637;
+  --ol-800:   #353C1E;
+  --muted:    #7A8564;
+  --success:  #4a7c4e;
+  --error:    #8B3A3A;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  background: var(--bg);
+  color: var(--ol-800);
+  min-height: 100vh;
+  overflow-x: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ─── Background ─── */
+.bg {
+  position: fixed; inset: 0; z-index: 0; overflow: hidden;
+  pointer-events: none;
+}
+.bg-blob {
+  position: absolute; border-radius: 50%;
+  background: radial-gradient(circle, rgba(141,150,96,0.10) 0%, transparent 70%);
+}
+.bg-blob-1 { width: 70vmax; height: 70vmax; top: -25vh; right: -20vw; animation: drift 18s ease-in-out infinite alternate; }
+.bg-blob-2 { width: 55vmax; height: 55vmax; bottom: -20vh; left: -15vw; animation: drift 22s ease-in-out 4s infinite alternate-reverse; }
+.bg-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(141,150,96,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(141,150,96,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* ─── Particles canvas ─── */
+#particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+
+/* ─── Page ─── */
+.page {
+  position: relative; z-index: 1; width: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 4rem 1.5rem 5rem; min-height: 100vh;
+}
+
+/* ─── Monogram ring ─── */
+.monogram {
+  margin-bottom: 2.2rem;
+  opacity: 0; animation: popIn 1s cubic-bezier(0.34,1.56,0.64,1) 0.3s forwards;
+}
+.monogram svg { width: 88px; height: 88px; }
+
+/* ─── Card ─── */
+.card {
+  background: var(--white);
+  border: 1px solid var(--ol-100);
+  border-radius: 3px;
+  padding: 3.5rem 3rem 3rem;
+  max-width: 460px; width: 100%;
+  text-align: center;
+  position: relative;
+  opacity: 0; animation: riseIn 1s cubic-bezier(0.22,1,0.36,1) 0.5s forwards;
+  /* subtle inner glow on hover */
+  transition: box-shadow 0.5s ease;
+}
+.card:hover {
+  box-shadow: 0 0 0 1px var(--ol-100), 0 8px 40px rgba(92,102,55,0.07);
+}
+
+/* animated corner brackets */
+.c { position: absolute; width: 0; height: 0; transition: width 0.5s ease, height 0.5s ease; }
+.c::before, .c::after { content: ''; position: absolute; background: var(--ol-200); }
+.c-tl { top: 10px; left: 10px; }
+.c-tl::before { top: 0; left: 0; width: 100%; height: 1px; }
+.c-tl::after  { top: 0; left: 0; width: 1px; height: 100%; }
+.c-tr { top: 10px; right: 10px; }
+.c-tr::before { top: 0; right: 0; width: 100%; height: 1px; }
+.c-tr::after  { top: 0; right: 0; width: 1px; height: 100%; }
+.c-bl { bottom: 10px; left: 10px; }
+.c-bl::before { bottom: 0; left: 0; width: 100%; height: 1px; }
+.c-bl::after  { bottom: 0; left: 0; width: 1px; height: 100%; }
+.c-br { bottom: 10px; right: 10px; }
+.c-br::before { bottom: 0; right: 0; width: 100%; height: 1px; }
+.c-br::after  { bottom: 0; right: 0; width: 1px; height: 100%; }
+.card:hover .c { width: 28px; height: 28px; }
+
+/* ─── Typography ─── */
+.eyebrow {
+  font-size: 9.5px; font-weight: 400; letter-spacing: 0.45em;
+  text-transform: uppercase; color: var(--ol-400);
+  margin-bottom: 1.2rem;
+  animation: fadeUp 0.7s ease 0.7s both;
+}
+.names {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(42px, 9vw, 56px);
+  font-weight: 300; line-height: 1.1; color: var(--ol-800);
+  animation: fadeUp 0.7s ease 0.8s both;
+}
+.names em { font-style: italic; color: var(--ol-600); }
+.amp {
+  display: block; font-style: italic;
+  font-size: 0.52em; color: var(--ol-100);
+  line-height: 1.1; margin: 0.08em 0;
+}
+.date-row {
+  display: flex; align-items: center; justify-content: center;
+  gap: 12px; margin-top: 1.2rem;
+  animation: fadeUp 0.7s ease 0.9s both;
+}
+.date-line { flex: 1; max-width: 52px; height: 1px; background: var(--ol-100); }
+.date-text { font-size: 9.5px; font-weight: 400; letter-spacing: 0.28em; text-transform: uppercase; color: var(--muted); }
+
+/* ─── Divider ─── */
+.divider {
+  display: flex; align-items: center; justify-content: center;
+  gap: 10px; margin: 1.8rem auto;
+  animation: fadeUp 0.7s ease 0.96s both;
+}
+.dv-line { width: 46px; height: 1px; background: var(--ol-100); }
+.dv-dot  { width: 4px; height: 4px; border-radius: 50%; background: var(--ol-100); }
+.dv-gem  {
+  width: 8px; height: 8px; background: var(--ol-400);
+  transform: rotate(45deg); flex-shrink: 0;
+  animation: gemSpin 14s linear infinite;
+}
+
+.message {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic; font-size: 17px;
+  line-height: 1.95; color: var(--muted);
+  margin-bottom: 2.4rem;
+  animation: fadeUp 0.7s ease 1.04s both;
+}
+
+/* ─── Upload ─── */
+.upload-zone { animation: fadeUp 0.7s ease 1.12s both; }
+
+#file-input { display: none; }
+
+.drop-area {
+  border: 1.5px dashed var(--ol-100);
+  border-radius: 3px;
+  padding: 2rem 1.5rem;
+  cursor: pointer;
+  position: relative; overflow: hidden;
+  transition: border-color 0.35s;
+}
+/* animated background wash on hover */
+.drop-area::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, var(--ol-50) 0%, transparent 100%);
+  opacity: 0; transition: opacity 0.4s;
+  pointer-events: none;
+}
+.drop-area:hover { border-color: var(--ol-400); }
+.drop-area:hover::after { opacity: 1; }
+
+.drop-icon-wrap {
+  width: 48px; height: 48px;
+  margin: 0 auto 1.1rem;
+  position: relative;
+}
+.drop-icon-wrap svg {
+  width: 100%; height: 100%; color: var(--ol-400);
+  transition: transform 0.45s cubic-bezier(0.34,1.56,0.64,1), color 0.3s;
+}
+.drop-area:hover .drop-icon-wrap svg { transform: translateY(-5px) scale(1.08); color: var(--ol-600); }
+
+/* pulse ring around icon */
+.drop-icon-wrap::before {
+  content: '';
+  position: absolute; inset: -8px;
+  border-radius: 50%;
+  border: 1px solid var(--ol-200);
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.35s, transform 0.35s;
+}
+.drop-area:hover .drop-icon-wrap::before { opacity: 1; transform: scale(1); }
+
+.drop-title {
+  font-size: 12px; font-weight: 400;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--ol-600); position: relative; z-index: 1;
+}
+
+/* ─── Files list ─── */
+.files-list {
+  margin-top: 1rem; display: none;
+  border: 1px solid var(--ol-100); border-radius: 3px; overflow: hidden;
+}
+.files-list.on { display: block; }
+
+.file-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--ol-100);
+  font-size: 12px; color: var(--muted);
+  animation: slideIn 0.35s cubic-bezier(0.22,1,0.36,1) both;
+}
+.file-row:last-child { border-bottom: none; }
+.file-thumb {
+  width: 34px; height: 34px; border-radius: 2px;
+  object-fit: cover; flex-shrink: 0;
+  border: 1px solid var(--ol-100);
+}
+.file-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; }
+.file-badge {
+  font-size: 10px; letter-spacing: 0.07em; flex-shrink: 0;
+  padding: 3px 9px; border-radius: 20px;
+}
+.file-badge.w { background: var(--ol-50);  color: var(--muted); }
+.file-badge.l { background: rgba(141,150,96,0.12); color: var(--ol-600); }
+.file-badge.d { background: rgba(74,124,78,0.10); color: var(--success); }
+.file-badge.e { background: rgba(139,58,58,0.10); color: var(--error); }
+
+/* ─── Progress ─── */
+.progress-track {
+  height: 2px; background: var(--ol-100); border-radius: 1px;
+  margin-top: 1rem; overflow: hidden; display: none;
+}
+.progress-track.on { display: block; }
+.progress-fill {
+  height: 100%; background: linear-gradient(90deg, var(--ol-200), var(--ol-600));
+  width: 0%; border-radius: 1px;
+  transition: width 0.45s cubic-bezier(0.25,1,0.5,1);
+  position: relative;
+}
+.progress-fill::after {
+  content: '';
+  position: absolute; top: 0; left: -100%;
+  width: 70%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent);
+  animation: shimmer 1.4s ease infinite;
+}
+
+.status-line {
+  margin-top: 0.7rem; font-size: 11px;
+  letter-spacing: 0.1em; min-height: 16px; color: var(--muted);
+}
+.status-line.ok  { color: var(--success); }
+.status-line.err { color: var(--error); }
+
+/* ─── Button ─── */
+.btn-row { margin-top: 1.2rem; display: none; }
+.btn-row.on { display: block; }
+
+.btn-send {
+  width: 100%; padding: 14px 24px;
+  background: var(--ol-800);
+  border: none; border-radius: 3px;
+  color: var(--ol-50);
+  font-family: 'Jost', sans-serif;
+  font-size: 10.5px; font-weight: 400;
+  letter-spacing: 0.32em; text-transform: uppercase;
+  cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  position: relative; overflow: hidden;
+  transition: background 0.3s, transform 0.15s;
+}
+/* liquid fill hover */
+.btn-send::before {
+  content: '';
+  position: absolute; left: -110%; top: 0;
+  width: 100%; height: 100%;
+  background: var(--ol-600);
+  transition: left 0.45s cubic-bezier(0.4,0,0.2,1);
+}
+.btn-send:hover { transform: translateY(-1px); }
+.btn-send:hover::before { left: 0; }
+.btn-send span, .btn-send svg { position: relative; z-index: 1; }
+.btn-send:active { transform: translateY(0); }
+.btn-send:disabled { background: var(--ol-100); color: var(--muted); cursor: not-allowed; transform: none; }
+.btn-send:disabled::before { display: none; }
+
+.hint {
+  font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--ol-100); margin-top: 1rem;
+}
+
+/* ─── Footer ─── */
+.footer {
+  margin-top: 3rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic; font-size: 14px;
+  color: var(--ol-400); letter-spacing: 0.12em;
+  opacity: 0; animation: fadeIn 1.2s ease 1.5s forwards;
+}
+
+/* ─── Keyframes ─── */
+@keyframes fadeUp  { from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);} }
+@keyframes fadeIn  { from{opacity:0;}to{opacity:1;} }
+@keyframes riseIn  { from{opacity:0;transform:translateY(30px) scale(0.97);}to{opacity:1;transform:none;} }
+@keyframes popIn   { from{opacity:0;transform:scale(0.6) rotate(-10deg);}to{opacity:1;transform:none;} }
+@keyframes slideIn { from{opacity:0;transform:translateX(-8px);}to{opacity:1;transform:none;} }
+@keyframes drift   { from{transform:translate(0,0);}to{transform:translate(2%, 3%);} }
+@keyframes shimmer { to{left:160%;} }
+@keyframes gemSpin { from{transform:rotate(45deg);}to{transform:rotate(405deg);} }
+@keyframes drawRing{ to{stroke-dashoffset:0;} }
+@keyframes ringPop { 0%{opacity:0;transform:scale(0.4);}60%{opacity:1;transform:scale(1.12);}100%{opacity:1;transform:scale(1);} }
+@keyframes particleFade {
+  0%   { opacity:0; transform: translateY(0) scale(1); }
+  20%  { opacity: 0.7; }
+  100% { opacity:0; transform: translateY(-80px) scale(0.4); }
+}
+
+@media (max-width: 480px) {
+  .card { padding: 2.5rem 1.5rem; }
+  .names { font-size: 40px; }
+  .message { font-size: 15.5px; }
+}
 </style>
 </head>
 <body>
+
+<div class="bg">
+  <div class="bg-blob bg-blob-1"></div>
+  <div class="bg-blob bg-blob-2"></div>
+  <div class="bg-grid"></div>
+</div>
+
+<canvas id="particles"></canvas>
+
 <div class="page">
 
-  <svg class="sprig-top" viewBox="0 0 160 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <line x1="80" y1="58" x2="80" y2="8" stroke="#8D9660" stroke-width="1" stroke-linecap="round"/>
-    <line x1="80" y1="40" x2="52" y2="24" stroke="#8D9660" stroke-width="0.8" stroke-linecap="round"/>
-    <line x1="80" y1="28" x2="58" y2="14" stroke="#8D9660" stroke-width="0.8" stroke-linecap="round"/>
-    <line x1="80" y1="18" x2="66" y2="8"  stroke="#8D9660" stroke-width="0.8" stroke-linecap="round"/>
-    <line x1="80" y1="40" x2="108" y2="24" stroke="#8D9660" stroke-width="0.8" stroke-linecap="round"/>
-    <line x1="80" y1="28" x2="102" y2="14" stroke="#8D9660" stroke-width="0.8" stroke-linecap="round"/>
-    <line x1="80" y1="18" x2="94"  y2="8"  stroke="#8D9660" stroke-width="0.8" stroke-linecap="round"/>
-    <ellipse cx="46" cy="21" rx="7" ry="4" fill="#C8CEA3" transform="rotate(-30 46 21)"/>
-    <ellipse cx="54" cy="11" rx="6" ry="3.5" fill="#8D9660" transform="rotate(-20 54 11)"/>
-    <ellipse cx="62" cy="5"  rx="5" ry="3"   fill="#C8CEA3" transform="rotate(-10 62 5)"/>
-    <ellipse cx="114" cy="21" rx="7" ry="4" fill="#C8CEA3" transform="rotate(30 114 21)"/>
-    <ellipse cx="106" cy="11" rx="6" ry="3.5" fill="#8D9660" transform="rotate(20 106 11)"/>
-    <ellipse cx="98"  cy="5"  rx="5" ry="3"   fill="#C8CEA3" transform="rotate(10 98 5)"/>
-    <circle cx="80" cy="7"  r="2.5" fill="#5C6637"/>
-    <circle cx="74" cy="4"  r="1.8" fill="#8D9660"/>
-    <circle cx="86" cy="4"  r="1.8" fill="#8D9660"/>
-  </svg>
+  <!-- Monogram -->
+  <div class="monogram">
+    <svg viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="44" cy="44" r="37"
+        stroke="#8D9660" stroke-width="0.8"
+        stroke-dasharray="233" stroke-dashoffset="233"
+        style="animation:drawRing 1.5s cubic-bezier(0.4,0,0.2,1) 0.6s forwards;"/>
+      <circle cx="44" cy="44" r="29"
+        stroke="#DDE5C0" stroke-width="0.5"
+        stroke-dasharray="182" stroke-dashoffset="182"
+        style="animation:drawRing 1.3s cubic-bezier(0.4,0,0.2,1) 0.9s forwards;"/>
+      <rect x="42" y="5" width="4" height="4" fill="#8D9660"
+        transform="rotate(45 44 7)"
+        style="opacity:0;animation:ringPop 0.4s ease 2.1s forwards;"/>
+      <rect x="42" y="79" width="4" height="4" fill="#8D9660"
+        transform="rotate(45 44 81)"
+        style="opacity:0;animation:ringPop 0.4s ease 2.2s forwards;"/>
+      <rect x="5" y="42" width="4" height="4" fill="#8D9660"
+        transform="rotate(45 7 44)"
+        style="opacity:0;animation:ringPop 0.4s ease 2.3s forwards;"/>
+      <rect x="79" y="42" width="4" height="4" fill="#8D9660"
+        transform="rotate(45 81 44)"
+        style="opacity:0;animation:ringPop 0.4s ease 2.4s forwards;"/>
+      <text x="44" y="40" text-anchor="middle"
+        font-family="Cormorant Garamond,serif" font-style="italic"
+        font-size="12" fill="#5C6637"
+        style="opacity:0;animation:fadeIn 0.7s ease 2s forwards;">A</text>
+      <text x="44" y="54" text-anchor="middle"
+        font-family="Cormorant Garamond,serif" font-style="italic"
+        font-size="12" fill="#5C6637"
+        style="opacity:0;animation:fadeIn 0.7s ease 2.15s forwards;">&amp; L</text>
+    </svg>
+  </div>
 
-  <div class="card">
-    <div class="card-inner">
-      <p class="eyebrow">Nunta noastră</p>
-      <h1 class="names">
-        <em>Alexandra</em>
-        <span class="amp">&amp;</span>
-        <em>Liviu</em>
-      </h1>
-      <div class="date-row">
-        <div class="date-line-el"></div>
-        <span class="date-text">25 iulie 2026</span>
-        <div class="date-line-el"></div>
+  <div class="card" id="card">
+    <div class="c c-tl"></div>
+    <div class="c c-tr"></div>
+    <div class="c c-bl"></div>
+    <div class="c c-br"></div>
+
+    <p class="eyebrow">Nunta noastră</p>
+
+    <h1 class="names">
+      <em>Alexandra</em>
+      <span class="amp">&amp;</span>
+      <em>Liviu</em>
+    </h1>
+
+    <div class="date-row">
+      <div class="date-line"></div>
+      <span class="date-text">25 iulie 2026</span>
+      <div class="date-line"></div>
+    </div>
+
+    <div class="divider">
+      <div class="dv-line"></div>
+      <div class="dv-dot"></div>
+      <div class="dv-gem"></div>
+      <div class="dv-dot"></div>
+      <div class="dv-line"></div>
+    </div>
+
+    <p class="message">
+      Suntem bucuroși că ești alături de noi<br>
+      în această zi de neuitat.<br>
+      Trimite-ne pozele tale din ziua nunții.
+    </p>
+
+    <div class="upload-zone">
+      <input type="file" id="file-input" accept="image/*" multiple>
+
+      <div class="drop-area" id="drop-area">
+        <div class="drop-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+        </div>
+        <p class="drop-title">Alege pozele din telefonul tău</p>
       </div>
-      <div class="leaf-divider">
-        <div class="leaf-line"></div>
-        <div class="leaf-dot"></div>
-        <div class="leaf-diamond"></div>
-        <div class="leaf-dot"></div>
-        <div class="leaf-line"></div>
+
+      <div class="files-list" id="files-list"></div>
+
+      <div class="progress-track" id="progress-track">
+        <div class="progress-fill" id="progress-fill"></div>
       </div>
-      <p class="message">
-        Suntem bucuroși că ești alături de noi<br>
-        în această zi de neuitat.<br>
-        Trimite-ne pozele tale din ziua nunții.
-      </p>
-      <div class="upload-area">
-        <input type="file" id="file-input" accept="image/*" multiple>
-        <button class="btn-upload" id="btn-select" onclick="document.getElementById('file-input').click()">
-          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+
+      <p class="status-line" id="status-line"></p>
+
+      <div class="btn-row" id="btn-row">
+        <button class="btn-send" id="btn-send">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
             <polyline points="17 8 12 3 7 8"/>
             <line x1="12" y1="3" x2="12" y2="15"/>
           </svg>
-          <span id="btn-label">Trimite poze</span>
+          <span id="btn-label">Trimite pozele</span>
         </button>
-        <div class="files-preview" id="files-preview"></div>
-        <div class="progress-wrap" id="progress-wrap">
-          <div class="progress-bar" id="progress-bar"></div>
-        </div>
-        <p class="status-msg" id="status-msg"></p>
-        <p class="btn-hint">Fișierele ajung direct în colecția noastră</p>
       </div>
+
+      <p class="hint">Pozele ajung direct în colecția noastră</p>
     </div>
   </div>
 
-  <svg class="sprig-bottom" viewBox="0 0 160 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <line x1="80" y1="58" x2="80" y2="8" stroke="#8D9660" stroke-width="1" stroke-linecap="round"/>
-    <line x1="80" y1="40" x2="52" y2="24" stroke="#8D9660" stroke-width="0.8" stroke-linecap="round"/>
-    <line x1="80" y1="28" x2="58" y2="14" stroke="#8D9660" stroke-width="0.8" stroke-linecap="round"/>
-    <line x1="80" y1="18" x2="66" y2="8"  stroke="#8D9660" stroke-width="0.8" stroke-linecap="round"/>
-    <line x1="80" y1="40" x2="108" y2="24" stroke="#8D9660" stroke-width="0.8" stroke-linecap="round"/>
-    <line x1="80" y1="28" x2="102" y2="14" stroke="#8D9660" stroke-width="0.8" stroke-linecap="round"/>
-    <line x1="80" y1="18" x2="94"  y2="8"  stroke="#8D9660" stroke-width="0.8" stroke-linecap="round"/>
-    <ellipse cx="46" cy="21" rx="7" ry="4" fill="#C8CEA3" transform="rotate(-30 46 21)"/>
-    <ellipse cx="54" cy="11" rx="6" ry="3.5" fill="#8D9660" transform="rotate(-20 54 11)"/>
-    <ellipse cx="62" cy="5"  rx="5" ry="3"   fill="#C8CEA3" transform="rotate(-10 62 5)"/>
-    <ellipse cx="114" cy="21" rx="7" ry="4" fill="#C8CEA3" transform="rotate(30 114 21)"/>
-    <ellipse cx="106" cy="11" rx="6" ry="3.5" fill="#8D9660" transform="rotate(20 106 11)"/>
-    <ellipse cx="98"  cy="5"  rx="5" ry="3"   fill="#C8CEA3" transform="rotate(10 98 5)"/>
-    <circle cx="80" cy="7"  r="2.5" fill="#5C6637"/>
-    <circle cx="74" cy="4"  r="1.8" fill="#8D9660"/>
-    <circle cx="86" cy="4"  r="1.8" fill="#8D9660"/>
-  </svg>
-
-  <p class="footer-note">Cu drag &nbsp;·&nbsp; Alexandra &amp; Liviu</p>
+  <p class="footer">Cu drag · Alexandra &amp; Liviu</p>
 </div>
 
 <script>
-  var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz06CcbZmYv3DngWVlY3Ix9pW_G7Gn5flVzrQF1hLFiNlqjnlVOqS535OxaScI0idOxRg/exec";
+/* ─── Particle system ─── */
+(function() {
+  var canvas = document.getElementById("particles");
+  var ctx = canvas.getContext("2d");
+  var W, H, particles = [];
 
-  var fileInput    = document.getElementById("file-input");
-  var btnSelect    = document.getElementById("btn-select");
-  var btnLabel     = document.getElementById("btn-label");
-  var preview      = document.getElementById("files-preview");
-  var progressWrap = document.getElementById("progress-wrap");
-  var progressBar  = document.getElementById("progress-bar");
-  var statusMsg    = document.getElementById("status-msg");
-  var selectedFiles = [];
-  var uploading = false;
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener("resize", resize);
 
-  fileInput.addEventListener("change", function() {
-    if (!fileInput.files.length) return;
-    selectedFiles = Array.from(fileInput.files);
-    showPreview();
+  function rand(a, b) { return a + Math.random() * (b - a); }
+
+  function spawnParticle() {
+    particles.push({
+      x: rand(0, W),
+      y: rand(H * 0.2, H * 0.9),
+      r: rand(1.5, 4),
+      vx: rand(-0.3, 0.3),
+      vy: rand(-0.6, -0.2),
+      alpha: 0,
+      life: 0,
+      maxLife: rand(90, 180)
+    });
+  }
+
+  var frame = 0;
+  function tick() {
+    ctx.clearRect(0, 0, W, H);
+    frame++;
+    if (frame % 12 === 0) spawnParticle();
+
+    for (var i = particles.length - 1; i >= 0; i--) {
+      var p = particles[i];
+      p.life++;
+      p.x += p.vx;
+      p.y += p.vy;
+      var t = p.life / p.maxLife;
+      p.alpha = t < 0.2 ? t / 0.2 : 1 - ((t - 0.2) / 0.8);
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(141,150,96," + (p.alpha * 0.35) + ")";
+      ctx.fill();
+
+      if (p.life >= p.maxLife) particles.splice(i, 1);
+    }
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+/* ─── Upload logic ─── */
+var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz06CcbZmYv3DngWVlY3Ix9pW_G7Gn5flVzrQF1hLFiNlqjnlVOqS535OxaScI0idOxRg/exec";
+
+var fileInput     = document.getElementById("file-input");
+var dropArea      = document.getElementById("drop-area");
+var filesList     = document.getElementById("files-list");
+var progressTrack = document.getElementById("progress-track");
+var progressFill  = document.getElementById("progress-fill");
+var statusLine    = document.getElementById("status-line");
+var btnRow        = document.getElementById("btn-row");
+var btnSend       = document.getElementById("btn-send");
+var btnLabel      = document.getElementById("btn-label");
+
+var selectedFiles = [], uploading = false;
+
+dropArea.addEventListener("click", function() { if (!uploading) fileInput.click(); });
+
+fileInput.addEventListener("change", function() {
+  if (!fileInput.files.length) return;
+  selectedFiles = Array.from(fileInput.files);
+  buildPreview();
+});
+
+function fmtSize(b) {
+  if (b < 1048576) return (b / 1024).toFixed(0) + " KB";
+  return (b / 1048576).toFixed(1) + " MB";
+}
+
+function buildPreview() {
+  filesList.innerHTML = "";
+  selectedFiles.forEach(function(file, i) {
+    var row = document.createElement("div");
+    row.className = "file-row";
+    row.style.animationDelay = (i * 0.06) + "s";
+
+    var img = document.createElement("img");
+    img.className = "file-thumb"; img.alt = "";
+    var url = URL.createObjectURL(file);
+    img.src = url;
+    img.onload = function() { URL.revokeObjectURL(url); };
+
+    row.innerHTML =
+      '<span class="file-name">' + file.name + '</span>' +
+      '<span class="file-badge w" id="badge-' + i + '">În așteptare</span>';
+    row.insertBefore(img, row.firstChild);
+    filesList.appendChild(row);
   });
 
-  function formatSize(bytes) {
-    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
-    return (bytes / (1024 * 1024)).toFixed(1) + " MB";
-  }
+  filesList.classList.add("on");
+  progressTrack.classList.add("on");
+  progressFill.style.width = "0%";
+  statusLine.textContent = "";
+  statusLine.className = "status-line";
+  btnLabel.textContent = "Trimite " + selectedFiles.length + (selectedFiles.length === 1 ? " poză" : " poze");
+  btnRow.classList.add("on");
+  btnSend.disabled = false;
+  btnSend.onclick = startUpload;
+}
 
-  function showPreview() {
-    preview.innerHTML = "";
-    selectedFiles.forEach(function(file, i) {
-      var div = document.createElement("div");
-      div.className = "file-item";
-      div.innerHTML =
-        '<span class="file-name">' + file.name + '</span>' +
-        '<span class="file-size">' + formatSize(file.size) + '</span>' +
-        '<span class="file-status waiting" id="status-' + i + '">În așteptare</span>';
-      preview.appendChild(div);
-    });
-    preview.classList.add("visible");
-    progressWrap.classList.add("visible");
-    progressBar.style.width = "0%";
-    statusMsg.textContent = "";
-    statusMsg.className = "status-msg";
-    btnLabel.textContent = "Încarcă " + selectedFiles.length + (selectedFiles.length === 1 ? " poză" : " poze");
-    btnSelect.onclick = startUpload;
-  }
+function startUpload() {
+  if (uploading) return;
+  uploading = true;
+  btnSend.disabled = true;
+  dropArea.style.pointerEvents = "none";
+  uploadNext(0);
+}
 
-  function startUpload() {
-    if (uploading) return;
-    uploading = true;
-    btnSelect.disabled = true;
-    uploadNext(0);
-  }
-
-  function uploadNext(index) {
-    if (index >= selectedFiles.length) {
-      progressBar.style.width = "100%";
-      statusMsg.textContent = "✓ Toate pozele au fost trimise cu succes!";
-      statusMsg.className = "status-msg success";
-      btnLabel.innerHTML = "Trimite alte poze";
-      btnSelect.disabled = false;
-      btnSelect.onclick = resetUpload;
-      uploading = false;
-      return;
-    }
-
-    var file = selectedFiles[index];
-    var statusEl = document.getElementById("status-" + index);
-    statusEl.textContent = "Se încarcă...";
-    statusEl.className = "file-status uploading";
-    statusMsg.textContent = "Se încarcă " + (index + 1) + " din " + selectedFiles.length + "...";
-
-    var reader = new FileReader();
-    reader.onload = function(e) {
-      var base64 = e.target.result.split(",")[1];
-
-      fetch(SCRIPT_URL, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "text/plain" },
-        body: JSON.stringify({
-          fileName: file.name,
-          mimeType: file.type,
-          fileData: base64
-        })
-      })
-      .then(function() {
-        statusEl.textContent = "✓ Trimisă";
-        statusEl.className = "file-status done";
-        var pct = Math.round(((index + 1) / selectedFiles.length) * 100);
-        progressBar.style.width = pct + "%";
-        uploadNext(index + 1);
-      })
-      .catch(function() {
-        statusEl.textContent = "✗ Eroare";
-        statusEl.className = "file-status error";
-        var pct = Math.round(((index + 1) / selectedFiles.length) * 100);
-        progressBar.style.width = pct + "%";
-        uploadNext(index + 1);
-      });
-    };
-    reader.readAsDataURL(file);
-  }
-
-  function resetUpload() {
-    selectedFiles = [];
-    fileInput.value = "";
-    preview.classList.remove("visible");
-    preview.innerHTML = "";
-    progressWrap.classList.remove("visible");
-    progressBar.style.width = "0%";
-    statusMsg.textContent = "";
-    statusMsg.className = "status-msg";
-    btnLabel.innerHTML = "Trimite poze";
-    btnSelect.disabled = false;
-    btnSelect.onclick = function() { document.getElementById("file-input").click(); };
+function uploadNext(i) {
+  if (i >= selectedFiles.length) {
+    progressFill.style.width = "100%";
+    statusLine.textContent = "✓ Toate pozele au fost trimise cu succes!";
+    statusLine.className = "status-line ok";
+    btnLabel.innerHTML = "Trimite alte poze";
+    btnSend.disabled = false;
+    btnSend.onclick = resetAll;
+    dropArea.style.pointerEvents = "";
     uploading = false;
+    return;
   }
+  var file = selectedFiles[i];
+  var badge = document.getElementById("badge-" + i);
+  badge.textContent = "Se încarcă…"; badge.className = "file-badge l";
+  statusLine.textContent = "Se trimite " + (i + 1) + " din " + selectedFiles.length + "…";
+  statusLine.className = "status-line";
+
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var base64 = e.target.result.split(",")[1];
+    fetch(SCRIPT_URL, {
+      method: "POST", mode: "no-cors",
+      headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify({ fileName: file.name, mimeType: file.type, fileData: base64 })
+    })
+    .then(function() {
+      badge.textContent = "✓ Trimisă"; badge.className = "file-badge d";
+      progressFill.style.width = Math.round(((i + 1) / selectedFiles.length) * 100) + "%";
+      uploadNext(i + 1);
+    })
+    .catch(function() {
+      badge.textContent = "✗ Eroare"; badge.className = "file-badge e";
+      progressFill.style.width = Math.round(((i + 1) / selectedFiles.length) * 100) + "%";
+      uploadNext(i + 1);
+    });
+  };
+  reader.readAsDataURL(file);
+}
+
+function resetAll() {
+  selectedFiles = []; fileInput.value = "";
+  filesList.classList.remove("on"); filesList.innerHTML = "";
+  progressTrack.classList.remove("on"); progressFill.style.width = "0%";
+  statusLine.textContent = ""; statusLine.className = "status-line";
+  btnRow.classList.remove("on");
+  dropArea.style.pointerEvents = ""; uploading = false;
+}
 </script>
 </body>
 </html>
