@@ -197,17 +197,17 @@
       <p class="message">
         Suntem bucuroși că ești alături de noi<br>
         în această zi de neuitat.<br>
-        Trimite-ne amintirile tale din ziua nunții.
+        Trimite-ne pozele tale din ziua nunții.
       </p>
       <div class="upload-area">
-        <input type="file" id="file-input" accept="image/*,video/*" multiple>
+        <input type="file" id="file-input" accept="image/*" multiple>
         <button class="btn-upload" id="btn-select" onclick="document.getElementById('file-input').click()">
           <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
             <polyline points="17 8 12 3 7 8"/>
             <line x1="12" y1="3" x2="12" y2="15"/>
           </svg>
-          <span id="btn-label">Trimite poze &amp; video</span>
+          <span id="btn-label">Trimite poze</span>
         </button>
         <div class="files-preview" id="files-preview"></div>
         <div class="progress-wrap" id="progress-wrap">
@@ -243,8 +243,6 @@
 
 <script>
   var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz06CcbZmYv3DngWVlY3Ix9pW_G7Gn5flVzrQF1hLFiNlqjnlVOqS535OxaScI0idOxRg/exec";
-
-              
 
   var fileInput    = document.getElementById("file-input");
   var btnSelect    = document.getElementById("btn-select");
@@ -283,7 +281,7 @@
     progressBar.style.width = "0%";
     statusMsg.textContent = "";
     statusMsg.className = "status-msg";
-    btnLabel.textContent = "Încarcă " + selectedFiles.length + (selectedFiles.length === 1 ? " fișier" : " fișiere");
+    btnLabel.textContent = "Încarcă " + selectedFiles.length + (selectedFiles.length === 1 ? " poză" : " poze");
     btnSelect.onclick = startUpload;
   }
 
@@ -297,9 +295,9 @@
   function uploadNext(index) {
     if (index >= selectedFiles.length) {
       progressBar.style.width = "100%";
-      statusMsg.textContent = "✓ Toate fișierele au fost trimise cu succes!";
+      statusMsg.textContent = "✓ Toate pozele au fost trimise cu succes!";
       statusMsg.className = "status-msg success";
-      btnLabel.innerHTML = "Trimite alte poze &amp; video";
+      btnLabel.innerHTML = "Trimite alte poze";
       btnSelect.disabled = false;
       btnSelect.onclick = resetUpload;
       uploading = false;
@@ -316,7 +314,6 @@
     reader.onload = function(e) {
       var base64 = e.target.result.split(",")[1];
 
-      // folosim no-cors pentru a evita eroarea CORS de la Google Apps Script
       fetch(SCRIPT_URL, {
         method: "POST",
         mode: "no-cors",
@@ -328,8 +325,7 @@
         })
       })
       .then(function() {
-        // cu no-cors nu putem citi raspunsul, dar daca nu e exceptie = succes
-        statusEl.textContent = "✓ Trimis";
+        statusEl.textContent = "✓ Trimisă";
         statusEl.className = "file-status done";
         var pct = Math.round(((index + 1) / selectedFiles.length) * 100);
         progressBar.style.width = pct + "%";
@@ -355,7 +351,7 @@
     progressBar.style.width = "0%";
     statusMsg.textContent = "";
     statusMsg.className = "status-msg";
-    btnLabel.innerHTML = "Trimite poze &amp; video";
+    btnLabel.innerHTML = "Trimite poze";
     btnSelect.disabled = false;
     btnSelect.onclick = function() { document.getElementById("file-input").click(); };
     uploading = false;
