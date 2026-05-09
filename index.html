@@ -106,7 +106,6 @@ body {
 /* ── Gallery grid preview ── */
 .gallery-grid {
   display: none; margin-top: 1rem;
-  display: none;
   grid-template-columns: repeat(4, 1fr);
   gap: 6px;
 }
@@ -124,13 +123,32 @@ body {
 }
 .gallery-cell:hover img { transform: scale(1.05); }
 
+/* ── Buton stergere poza ── */
+.cell-remove {
+  position: absolute;
+  top: 4px; right: 4px;
+  width: 20px; height: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 500; color: var(--error);
+  cursor: pointer; z-index: 5;
+  opacity: 0; transition: opacity 0.2s, background 0.2s, transform 0.2s;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  line-height: 1;
+}
+.gallery-cell:hover .cell-remove { opacity: 1; }
+.cell-remove:hover { background: #fff; transform: scale(1.1); }
+/* Ascundem butonul in timpul incarcarii */
+.gallery-grid.uploading .cell-remove { display: none !important; }
+
 /* status overlay on each cell */
 .cell-overlay {
   position: absolute; inset: 0;
   display: flex; align-items: center; justify-content: center;
   font-size: 18px;
   background: rgba(248,250,243,0); transition: background 0.3s;
-  pointer-events: none;
+  pointer-events: none; z-index: 2;
 }
 .cell-overlay.loading { background: rgba(248,250,243,0.5); }
 .cell-overlay.done    { background: rgba(74,124,78,0.18); }
@@ -310,7 +328,7 @@ body {
     <div class="c c-tl"></div><div class="c c-tr"></div>
     <div class="c c-bl"></div><div class="c c-br"></div>
 
-    <!-- Thank-you overlay (hidden initially) -->
+    <!-- Thank-you overlay -->
     <div class="thankyou" id="thankyou">
       <canvas id="confetti"></canvas>
       <svg class="ty-ring" id="ty-ring" viewBox="0 0 90 90" fill="none">
@@ -357,7 +375,7 @@ body {
         <p class="drop-title">Alege pozele din telefonul tău</p>
       </div>
 
-      <!-- Gallery grid replaces old list -->
+      <!-- Gallery grid preview -->
       <div class="gallery-grid" id="gallery-grid"></div>
 
       <div class="progress-wrap" id="progress-wrap">
@@ -499,6 +517,16 @@ var MAX_SHOWN = 11; // show up to 11 cells + 1 counter cell
 
 function buildGallery() {
   galleryGrid.innerHTML = "";
+  
+  // Daca utilizatorul a sters toate pozele, resetam afisajul
+  if (selectedFiles.length === 0) {
+    galleryGrid.classList.remove("on");
+    progressWrap.classList.remove("on");
+    btnRow.classList.remove("on");
+    fileInput.value = "";
+    return;
+  }
+
   var shown = Math.min(selectedFiles.length, MAX_SHOWN);
 
   selectedFiles.slice(0, shown).forEach(function(file, i) {
@@ -513,12 +541,24 @@ function buildGallery() {
     img.src = url;
     img.onload = function(){ URL.revokeObjectURL(url); };
 
+    // Butonul de stergere individual
+    var removeBtn = document.createElement("div");
+    removeBtn.className = "cell-remove";
+    removeBtn.innerHTML = "×";
+    removeBtn.onclick = function(e) {
+      e.stopPropagation();
+      if(uploading) return; // nu permite stergerea in timpul incarcarii
+      selectedFiles.splice(i, 1);
+      buildGallery(); // re-randeaza grila dupa stergere
+    };
+
     var overlay = document.createElement("div");
     overlay.className = "cell-overlay";
     overlay.id = "overlay-" + i;
     overlay.innerHTML = '<div class="cell-spinner"></div><span class="cell-check">✓</span><span class="cell-err">✕</span>';
 
     cell.appendChild(img);
+    cell.appendChild(removeBtn);
     cell.appendChild(overlay);
     galleryGrid.appendChild(cell);
   });
@@ -546,6 +586,7 @@ function buildGallery() {
 function startUpload() {
   if(uploading) return;
   uploading = true;
+  galleryGrid.classList.add("uploading"); // ascunde butoanele 'x'
   doneCount = 0; errCount = 0;
   btnSend.disabled = true;
   dropArea.style.pointerEvents = "none";
@@ -631,7 +672,10 @@ function resetAll() {
   selectedFiles = []; fileInput.value = "";
   uploading = false; doneCount = 0; errCount = 0;
 
-  galleryGrid.classList.remove("on"); galleryGrid.innerHTML = "";
+  galleryGrid.classList.remove("on"); 
+  galleryGrid.classList.remove("uploading");
+  galleryGrid.innerHTML = "";
+  
   progressWrap.classList.remove("on"); progressFill.style.width = "0%";
   btnRow.classList.remove("on");
   dropArea.style.pointerEvents = "";
