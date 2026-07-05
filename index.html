@@ -117,11 +117,24 @@ body {
   border: 1px solid var(--ol-100);
   animation: cellPop 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
 }
-.gallery-cell img {
+.gallery-cell img,
+.gallery-cell video {
   width: 100%; height: 100%; object-fit: cover;
   display: block; transition: transform 0.4s ease;
 }
-.gallery-cell:hover img { transform: scale(1.05); }
+.gallery-cell:hover img,
+.gallery-cell:hover video { transform: scale(1.05); }
+
+/* video play badge */
+.cell-play {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none; z-index: 3;
+}
+.cell-play svg {
+  width: 26px; height: 26px;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.4));
+}
 
 /* ── Buton stergere poza ── */
 .cell-remove {
@@ -358,11 +371,11 @@ body {
     <p class="message">
       Suntem bucuroși că ești alături de noi<br>
       în această zi de neuitat.<br>
-      Trimite-ne pozele tale din ziua nunții.
+      Trimite-ne pozele și video-urile tale din ziua nunții.
     </p>
 
     <div class="upload-zone">
-      <input type="file" id="file-input" accept="image/*" multiple>
+      <input type="file" id="file-input" accept="image/*,video/*" multiple>
 
       <div class="drop-area" id="drop-area">
         <div class="drop-icon-wrap">
@@ -372,7 +385,7 @@ body {
             <polyline points="21 15 16 10 5 21"/>
           </svg>
         </div>
-        <p class="drop-title">Alege pozele din telefonul tău</p>
+        <p class="drop-title">Alege pozele sau video-urile din telefonul tău</p>
       </div>
 
       <!-- Gallery grid preview -->
@@ -399,7 +412,7 @@ body {
         </button>
       </div>
 
-      <p class="hint">Pozele ajung direct în colecția noastră</p>
+      <p class="hint">Pozele și video-urile ajung direct în colecția noastră</p>
     </div>
   </div>
 
@@ -535,11 +548,29 @@ function buildGallery() {
     cell.style.animationDelay = (i * 0.05) + "s";
     cell.id = "cell-" + i;
 
-    var img = document.createElement("img");
-    img.alt = "";
+    var isVideo = file.type.indexOf("video/") === 0;
     var url = URL.createObjectURL(file);
-    img.src = url;
-    img.onload = function(){ URL.revokeObjectURL(url); };
+
+    if (isVideo) {
+      var vid = document.createElement("video");
+      vid.src = url;
+      vid.muted = true;
+      vid.playsInline = true;
+      vid.preload = "metadata";
+      vid.onloadeddata = function(){ URL.revokeObjectURL(url); };
+      cell.appendChild(vid);
+
+      var play = document.createElement("div");
+      play.className = "cell-play";
+      play.innerHTML = '<svg viewBox="0 0 24 24" fill="white"><circle cx="12" cy="12" r="11" fill="rgba(53,60,30,0.55)"/><polygon points="10,8 17,12 10,16"/></svg>';
+      cell.appendChild(play);
+    } else {
+      var img = document.createElement("img");
+      img.alt = "";
+      img.src = url;
+      img.onload = function(){ URL.revokeObjectURL(url); };
+      cell.appendChild(img);
+    }
 
     // Butonul de stergere individual
     var removeBtn = document.createElement("div");
@@ -557,7 +588,6 @@ function buildGallery() {
     overlay.id = "overlay-" + i;
     overlay.innerHTML = '<div class="cell-spinner"></div><span class="cell-check">✓</span><span class="cell-err">✕</span>';
 
-    cell.appendChild(img);
     cell.appendChild(removeBtn);
     cell.appendChild(overlay);
     galleryGrid.appendChild(cell);
@@ -574,9 +604,9 @@ function buildGallery() {
   progressWrap.classList.add("on");
   progressFill.style.width = "0%";
   progPct.textContent = "0%";
-  progText.textContent = selectedFiles.length + (selectedFiles.length===1?" poză selectată":" poze selectate");
+  progText.textContent = selectedFiles.length + (selectedFiles.length===1?" fișier selectat":" fișiere selectate");
 
-  btnLabel.textContent = "Trimite " + selectedFiles.length + (selectedFiles.length===1?" poză":" poze");
+  btnLabel.textContent = "Trimite " + selectedFiles.length + (selectedFiles.length===1?" fișier":" fișiere");
   btnRow.classList.add("on");
   btnSend.disabled = false;
   btnSend.onclick = startUpload;
@@ -622,11 +652,23 @@ function startUpload() {
   pump();
 }
 
+var CHUNK_SIZE = 5 * 1024 * 1024; // 5 MB pe bucata (raw, inainte de base64)
+var CHUNK_THRESHOLD = 5 * 1024 * 1024; // fisierele mai mari de atat se trimit pe bucati
+
 function uploadOne(idx, attempt, cb) {
   var file = selectedFiles[idx];
   var overlay = document.getElementById("overlay-" + idx);
   if(overlay) overlay.className = "cell-overlay loading";
 
+  if (file.size > CHUNK_THRESHOLD) {
+    uploadFileChunked(file, idx, cb);
+  } else {
+    uploadFileSingle(file, idx, attempt, cb);
+  }
+}
+
+function uploadFileSingle(file, idx, attempt, cb) {
+  var overlay = document.getElementById("overlay-" + idx);
   var reader = new FileReader();
   reader.onload = function(e) {
     var base64 = e.target.result.split(",")[1];
@@ -641,8 +683,7 @@ function uploadOne(idx, attempt, cb) {
     })
     .catch(function() {
       if(attempt < MAX_RETRIES) {
-        // retry after short delay
-        setTimeout(function(){ uploadOne(idx, attempt+1, cb); }, 800 * (attempt+1));
+        setTimeout(function(){ uploadFileSingle(file, idx, attempt+1, cb); }, 800 * (attempt+1));
       } else {
         if(overlay) overlay.className = "cell-overlay error";
         cb(false);
@@ -652,10 +693,62 @@ function uploadOne(idx, attempt, cb) {
   reader.readAsDataURL(file);
 }
 
+function uploadFileChunked(file, idx, cb) {
+  var overlay = document.getElementById("overlay-" + idx);
+  var uploadId = "u" + Date.now() + "_" + Math.random().toString(36).slice(2, 9);
+  var totalChunks = Math.ceil(file.size / CHUNK_SIZE);
+  var chunkIndex = 0;
+
+  function sendChunk(attempt) {
+    var start = chunkIndex * CHUNK_SIZE;
+    var end = Math.min(start + CHUNK_SIZE, file.size);
+    var blobChunk = file.slice(start, end);
+
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var base64 = e.target.result.split(",")[1];
+      fetch(SCRIPT_URL, {
+        method: "POST", mode: "no-cors",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({
+          chunked: true,
+          uploadId: uploadId,
+          chunkIndex: chunkIndex,
+          totalChunks: totalChunks,
+          fileName: file.name,
+          mimeType: file.type,
+          data: base64
+        })
+      })
+      .then(function() {
+        chunkIndex++;
+        if (chunkIndex < totalChunks) {
+          if (progText) progText.textContent = "Se trimite un video mare — bucata " + chunkIndex + " din " + totalChunks + "…";
+          sendChunk(0);
+        } else {
+          if(overlay) overlay.className = "cell-overlay done";
+          cb(true);
+        }
+      })
+      .catch(function() {
+        if (attempt < MAX_RETRIES) {
+          setTimeout(function(){ sendChunk(attempt + 1); }, 800 * (attempt + 1));
+        } else {
+          if(overlay) overlay.className = "cell-overlay error";
+          cb(false);
+        }
+      });
+    };
+    reader.readAsDataURL(blobChunk);
+  }
+
+  sendChunk(0);
+}
+
 function onAllDone() {
   // Show thank-you overlay
   var n = selectedFiles.length;
-  tyCount.textContent = n + (n===1?" poză trimisă cu drag":" poze trimise cu drag");
+  tyCount.textContent = n + (n===1?" fișier trimis cu drag":" fișiere trimise cu drag");
   thankyou.classList.add("show");
   // trigger ring animation after a tiny frame delay
   requestAnimationFrame(function(){
