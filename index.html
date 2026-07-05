@@ -350,7 +350,7 @@ body {
         <polyline class="ty-check" points="28,46 40,58 62,34"
           stroke="#5C6637" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
       </svg>
-      <p class="ty-title">Mulțumim din suflet!</p>
+      <p class="ty-title">Mulțumim!</p>
       <p class="ty-sub">Pozele au ajuns la noi</p>
       <p class="ty-count" id="ty-count"></p>
       <button class="ty-btn" id="ty-btn">Trimite mai multe</button>
@@ -723,7 +723,7 @@ function uploadFileChunked(file, idx, cb) {
       .then(function() {
         chunkIndex++;
         if (chunkIndex < totalChunks) {
-          if (progText) progText.textContent = "Se trimite un video mare — bucata " + chunkIndex + " din " + totalChunks + "…";
+          if (progText) progText.textContent = "Se trimite un video de dimenisuni mari— split " + chunkIndex + " din " + totalChunks + "…";
           sendChunk(0);
         } else {
           if(overlay) overlay.className = "cell-overlay done";
@@ -748,7 +748,7 @@ function uploadFileChunked(file, idx, cb) {
 function onAllDone() {
   // Show thank-you overlay
   var n = selectedFiles.length;
-  tyCount.textContent = n + (n===1?" fișier trimis cu drag":" fișiere trimise cu drag");
+  tyCount.textContent = n + (n===1?" fișier trimis cu succes":" fișiere trimise cu succes");
   thankyou.classList.add("show");
   // trigger ring animation after a tiny frame delay
   requestAnimationFrame(function(){
